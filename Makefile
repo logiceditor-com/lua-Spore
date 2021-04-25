@@ -132,11 +132,11 @@ bed:
 check: test
 
 test:
-	LUA_PATH=";;$(CURDIR)/src/?.lua" \
+	LUA_PATH="$(CURDIR)/src/?.lua;;" \
 		prove --exec=$(LUA) test/*.lua
 
 test_eg:
-	LUA_PATH=";;$(CURDIR)/src/?.lua" \
+	LUA_PATH="$(CURDIR)/src/?.lua;;" \
 		prove --exec=$(LUA) eg/*.lua
 
 luacheck:
@@ -149,7 +149,7 @@ luacheck:
 
 coverage:
 	rm -f luacov.*
-	-LUA_PATH=";;$(CURDIR)/src/?.lua" \
+	-LUA_PATH="$(CURDIR)/src/?.lua;;" \
 		prove --exec="$(LUA) -lluacov" test/*.lua
 	luacov-console $(CURDIR)/src
 	luacov-console -s $(CURDIR)/src
