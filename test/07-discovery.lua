@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(12)
 
@@ -37,19 +37,19 @@ require 'Spore'.new_from_lua = function (t)
 end --mock
 
 local m = require 'Spore.GoogleDiscovery'
-type_ok( m, 'table', "Spore.GoogleDiscovery" )
-is( m, package.loaded['Spore.GoogleDiscovery'] )
+is_table( m, "Spore.GoogleDiscovery" )
+equals( m, package.loaded['Spore.GoogleDiscovery'] )
 
-type_ok( m.new_from_discovery, 'function' )
-type_ok( m.convert, 'function' )
+is_function( m.new_from_discovery )
+is_function( m.convert )
 
 local spec = m.new_from_discovery('mock')
-is( spec.name, 'api' )
-is( spec.version, 'v1' )
-is( spec.description, 'api for unit test' )
-is( spec.base_url, 'https://www.googleapis.com/restapi/' )
-is( spec.meta.documentation, 'http://developers.google.com/discovery' )
+equals( spec.name, 'api' )
+equals( spec.version, 'v1' )
+equals( spec.description, 'api for unit test' )
+equals( spec.base_url, 'https://www.googleapis.com/restapi/' )
+equals( spec.meta.documentation, 'http://developers.google.com/discovery' )
 local meth = spec.methods.get_info
-type_ok( meth, 'table' )
-is( meth.path, '/show' )
-is( meth.method, 'GET' )
+is_table( meth )
+equals( meth.path, '/show' )
+equals( meth.method, 'GET' )

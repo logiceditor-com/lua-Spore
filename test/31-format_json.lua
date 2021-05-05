@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(13)
 
@@ -19,8 +19,8 @@ local env = {
 }
 local req = require 'Spore.Request'.new(env)
 local cb = mw.call({}, req)
-type_ok( cb, 'function', "returns a function" )
-is( env.spore.payload, [[{"lua":"table"}]], "payload encoded")
+is_function( cb, "returns a function" )
+equals( env.spore.payload, [[{"lua":"table"}]], "payload encoded")
 
 local resp = {
     status = 200,
@@ -34,13 +34,13 @@ local resp = {
 }
 
 local ret = cb(resp)
-is( req.headers['accept'], 'application/json' )
-is( ret, resp, "returns same table" )
-is( ret.status, 200, "200 OK" )
+equals( req.headers['accept'], 'application/json' )
+equals( ret, resp, "returns same table" )
+equals( ret.status, 200, "200 OK" )
 local data = ret.body
-type_ok( data, 'table' )
-is( data.username, 'john', "username is john" )
-is( data.password, 's3kr3t', "password is s3kr3t" )
+is_table( data )
+equals( data.username, 'john', "username is john" )
+equals( data.password, 's3kr3t', "password is s3kr3t" )
 
 resp.body = [[
 {
@@ -50,12 +50,12 @@ resp.body = [[
 ]]
 env.spore.errors = io.tmpfile()
 local r, ex = pcall(cb, resp)
-nok( r )
-like( ex.reason, "unexpected character", "Invalid JSON data" )
+falsy( r )
+matches( ex.reason, "unexpected character", "Invalid JSON data" )
 env.spore.errors:seek'set'
 local msg = env.spore.errors:read '*l'
-like( msg, "unexpected character", "Invalid JSON data" )
+matches( msg, "unexpected character", "Invalid JSON data" )
 local _ = env.spore.errors:read '*l'
 
 msg = env.spore.errors:read '*a'
-is( msg, resp.body .. "\n")
+equals( msg, resp.body .. "\n")

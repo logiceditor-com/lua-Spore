@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(6)
 
@@ -11,12 +11,12 @@ end
 local mw = require 'Spore.Middleware.Logging'
 
 local req = require 'Spore.Request'.new({ sporex = {} })
-type_ok( req, 'table', "Spore.Request.new" )
+is_table( req, "Spore.Request.new" )
 
 local r = mw.call( {}, req )
-is( req.env.sporex.logger, nil, "sporex.logger is not set" )
-is( r, nil )
+equals( req.env.sporex.logger, nil, "sporex.logger is not set" )
+equals( r, nil )
 
 r = mw.call( { logger = "MyLogger" }, req )
-is( req.env.sporex.logger, "MyLogger", "sporex.logger is set" )
-is( r, nil )
+equals( req.env.sporex.logger, "MyLogger", "sporex.logger is set" )
+equals( r, nil )

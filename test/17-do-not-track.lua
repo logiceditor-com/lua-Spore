@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(6)
 
@@ -11,11 +11,11 @@ end
 local mw = require 'Spore.Middleware.DoNotTrack'
 
 local req = require 'Spore.Request'.new({})
-type_ok( req, 'table', "Spore.Request.new" )
-type_ok( req.headers, 'table' )
-is( req.headers['x-do-not-track'], nil )
+is_table( req, "Spore.Request.new" )
+is_table( req.headers )
+equals( req.headers['x-do-not-track'], nil )
 
 local r = mw.call( {}, req )
-is( req.headers['x-do-not-track'], 1, "x-do-not-track is set" )
-is( r, nil )
+equals( req.headers['x-do-not-track'], 1, "x-do-not-track is set" )
+equals( r, nil )
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(6)
 
@@ -14,15 +14,15 @@ local Spore = require 'Spore'
 local client = Spore.new_from_spec './test/api.json'
 
 local res = client:get_user_info{ payload = 'opaque data', user = 'john' }
-is( res.headers, headers, "without middleware" )
+equals( res.headers, headers, "without middleware" )
 
 client:enable 'Format.JSON'
 res = client:get_user_info{ payload = 'opaque data', user = 'john' }
-is( res.headers, headers, "with middleware" )
+equals( res.headers, headers, "with middleware" )
 
 client:enable 'UserAgent'
 res = client:get_info()
-is( res.headers, headers, "with middleware" )
+equals( res.headers, headers, "with middleware" )
 
 package.loaded['Spore.Middleware.Dummy'] = {}
 local dummy_resp = { status = 200 }
@@ -33,11 +33,11 @@ end
 client:reset_middlewares()
 client:enable 'Dummy'
 res = client:get_info()
-is( res, dummy_resp )
+equals( res, dummy_resp )
 
 dummy_resp.status = 599
 res = client:get_info()
-is( res, dummy_resp )
+equals( res, dummy_resp )
 
 local async_resp = { status = 201 }
 package.loaded['Spore.Middleware.Async'] = {}
@@ -51,7 +51,7 @@ end
 
 local co = coroutine.create(function()
     res = client:get_info()
-    is( res.status, async_resp.status )
+    equals( res.status, async_resp.status )
 end)
 client:reset_middlewares()
 client:enable('Async', {thread = co})

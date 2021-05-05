@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(5)
 
@@ -15,15 +15,15 @@ end
 local mw = require 'Spore.Middleware.Redirection'
 
 local req = require 'Spore.Request'.new({ spore = {} })
-type_ok( req, 'table', "Spore.Request.new" )
+is_table( req, "Spore.Request.new" )
 
 local cb = mw.call( {}, req )
-type_ok( cb, 'function' )
+is_function( cb )
 
 local res = { status = 200, headers = {} }
 local r = cb(res)
-is( r, res )
+equals( r, res )
 
 res = { status = 301, headers = { location = "http://next.org" } }
 r = cb(res)
-is( r.status, 222 )
+equals( r.status, 222 )

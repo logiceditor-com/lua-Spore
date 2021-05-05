@@ -2,23 +2,23 @@
 
 Spore = require 'Spore'
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(29)
 
-error_like( [[Spore.new_from_string(true)]],
-            "bad argument #1 to new_from_string %(string expected, got boolean%)" )
+error_matches( [[Spore.new_from_string(true)]],
+        "bad argument #1 to new_from_string %(string expected, got boolean%)" )
 
-error_like( [[Spore.new_from_string('', '', true)]],
-            "bad argument #3 to new_from_string %(string expected, got boolean%)" )
+error_matches( [[Spore.new_from_string('', '', true)]],
+        "bad argument #3 to new_from_string %(string expected, got boolean%)" )
 
-error_like( [[Spore.new_from_string('{ BAD }')]],
-            "unexpected character", "Invalid JSON data" )
+error_matches( [[Spore.new_from_string('{ BAD }')]],
+        "unexpected character", "Invalid JSON data" )
 
-error_like( [[Spore.new_from_string('{ }', '{ }')]],
-            "no method in spec" )
+error_matches( [[Spore.new_from_string('{ }', '{ }')]],
+        "no method in spec" )
 
-error_like( [=[Spore.new_from_string([[
+error_matches( [=[Spore.new_from_string([[
 {
     base_url : "http://services.org/restapi/",
     methods : {
@@ -28,9 +28,9 @@ error_like( [=[Spore.new_from_string([[
     }
 }
 ]])]=],
-            "get_info without field method" )
+        "get_info without field method" )
 
-error_like( [=[Spore.new_from_string([[
+error_matches( [=[Spore.new_from_string([[
 {
     base_url : "http://services.org/restapi/",
     methods : {
@@ -40,9 +40,9 @@ error_like( [=[Spore.new_from_string([[
     }
 }
 ]])]=],
-            "get_info without field path" )
+        "get_info without field path" )
 
-error_like( [=[Spore.new_from_string([[
+error_matches( [=[Spore.new_from_string([[
 {
     base_url : "http://services.org/restapi/",
     methods : {
@@ -54,9 +54,9 @@ error_like( [=[Spore.new_from_string([[
     }
 }
 ]])]=],
-            "expected_status of get_info is not an array" )
+        "expected_status of get_info is not an array" )
 
-error_like( [=[Spore.new_from_string([[
+error_matches( [=[Spore.new_from_string([[
 {
     base_url : "http://services.org/restapi/",
     methods : {
@@ -68,9 +68,9 @@ error_like( [=[Spore.new_from_string([[
     }
 }
 ]])]=],
-            "required_params of get_info is not an array" )
+        "required_params of get_info is not an array" )
 
-error_like( [=[Spore.new_from_string([[
+error_matches( [=[Spore.new_from_string([[
 {
     base_url : "http://services.org/restapi/",
     methods : {
@@ -82,9 +82,9 @@ error_like( [=[Spore.new_from_string([[
     }
 }
 ]])]=],
-            "optional_params of get_info is not an array" )
+        "optional_params of get_info is not an array" )
 
-error_like( [=[Spore.new_from_string([[
+error_matches( [=[Spore.new_from_string([[
 {
     base_url : "http://services.org/restapi/",
     methods : {
@@ -96,9 +96,9 @@ error_like( [=[Spore.new_from_string([[
     }
 }
 ]])]=],
-            "form%-data of get_info is not an hash" )
+        "form%-data of get_info is not an hash" )
 
-error_like( [=[Spore.new_from_string([[
+error_matches( [=[Spore.new_from_string([[
 {
     base_url : "http://services.org/restapi/",
     methods : {
@@ -110,9 +110,9 @@ error_like( [=[Spore.new_from_string([[
     }
 }
 ]])]=],
-            "headers of get_info is not an hash" )
+        "headers of get_info is not an hash" )
 
-error_like( [=[Spore.new_from_string([[
+error_matches( [=[Spore.new_from_string([[
 {
     methods : {
         get_info : {
@@ -122,9 +122,9 @@ error_like( [=[Spore.new_from_string([[
     }
 }
 ]])]=],
-            "base_url is missing" )
+        "base_url is missing" )
 
-error_like( [=[Spore.new_from_string([[
+error_matches( [=[Spore.new_from_string([[
 {
     base_url : "",
     methods : {
@@ -135,9 +135,9 @@ error_like( [=[Spore.new_from_string([[
     }
 }
 ]])]=],
-            "base_url is invalid" )
+        "base_url is invalid" )
 
-error_like( [=[Spore.new_from_string([[
+error_matches( [=[Spore.new_from_string([[
 {
     methods : {
         get_info : {
@@ -147,9 +147,9 @@ error_like( [=[Spore.new_from_string([[
     }
 }
 ]], { base_url = 'services.org' })]=],
-            "base_url without host" )
+        "base_url without host" )
 
-error_like( [=[Spore.new_from_string([[
+error_matches( [=[Spore.new_from_string([[
 {
     methods : {
         get_info : {
@@ -159,9 +159,9 @@ error_like( [=[Spore.new_from_string([[
     }
 }
 ]], { base_url = '//services.org/restapi/' })]=],
-            "base_url without scheme" )
+        "base_url without scheme" )
 
-error_like( [=[Spore.new_from_string([[
+error_matches( [=[Spore.new_from_string([[
 {
     base_url : "http://services.org/restapi/",
     methods : {
@@ -182,7 +182,7 @@ error_like( [=[Spore.new_from_string([[
     }
 }
 ]])]=],
-            "get_info duplicated" )
+        "get_info duplicated" )
 
 local client = Spore.new_from_string([[
 {
@@ -195,10 +195,10 @@ local client = Spore.new_from_string([[
     }
 }
 ]])
-type_ok( client, 'table' )
-type_ok( client.enable, 'function' )
-type_ok( client.reset_middlewares, 'function' )
-type_ok( client.get_info, 'function' )
+is_table( client )
+is_function( client.enable )
+is_function( client.reset_middlewares )
+is_function( client.get_info )
 
 Spore.methname_modifier = function (name)
     local lowerCamelCase = name:gsub('_(%w)', function (c) return c:upper() end)
@@ -215,11 +215,11 @@ client = Spore.new_from_string([[
     }
 }
 ]])
-type_ok( client, 'table' )
-type_ok( client.enable, 'function' )
-type_ok( client.reset_middlewares, 'function' )
-type_ok( client.getInfo, 'function' )
-is( client.get_info, nil )
+is_table( client )
+is_function( client.enable )
+is_function( client.reset_middlewares )
+is_function( client.getInfo )
+equals( client.get_info, nil )
 Spore.methname_modifier = nil
 
 
@@ -241,14 +241,14 @@ require 'Spore.Protocols'.request = function (req)
 end -- mock
 
 client = Spore.new_from_spec 'http://local.dummy.org/spec.json'
-type_ok( client, 'table' )
-type_ok( client.enable, 'function' )
-type_ok( client.get_info, 'function' )
+is_table( client )
+is_function( client.enable )
+is_function( client.get_info )
 
 
 require 'Spore.Protocols'.request = function (req)
     return { status = 404 }
 end -- mock
 
-error_like( [[Spore.new_from_spec 'http://local.dummy.org/spec.json']],
-            "404 not expected" )
+error_matches( [[Spore.new_from_spec 'http://local.dummy.org/spec.json']],
+        "404 not expected" )

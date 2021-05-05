@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 if not pcall(require, 'lxp.lom') then
     skip_all 'no xml'
@@ -43,24 +43,24 @@ client:enable('Format.XML', {
 })
 
 local r = client:get_info()
-is( #r.body.config, 0, "with options" )
-is( r.body.config.logdir, "/var/log/foo/" )
-is( r.body.config.debugfile, "/tmp/foo.debug" )
-is( r.body.config.server.sahara.osname, "solaris" )
-is( #r.body.config.server.sahara.address, 2 )
-is( r.body.config.server.sahara.address[1], "10.0.0.101" )
-is( r.body.config.server.gobi.address[1], "10.0.0.102" )
+equals( #r.body.config, 0, "with options" )
+equals( r.body.config.logdir, "/var/log/foo/" )
+equals( r.body.config.debugfile, "/tmp/foo.debug" )
+equals( r.body.config.server.sahara.osname, "solaris" )
+equals( #r.body.config.server.sahara.address, 2 )
+equals( r.body.config.server.sahara.address[1], "10.0.0.101" )
+equals( r.body.config.server.gobi.address[1], "10.0.0.102" )
 
 client:reset_middlewares()
 client:enable 'Format.XML'
 r = client:get_info()
-is( #r.body.config, 0, "without option" )
-is( r.body.config.logdir, "/var/log/foo/" )
-is( r.body.config.debugfile, "/tmp/foo.debug" )
-is( #r.body.config.server, 3 )
-is( r.body.config.server[1].name, "sahara" )
-is( r.body.config.server[1].osname, "solaris" )
-is( #r.body.config.server[1].address, 2 )
-is( r.body.config.server[1].address[1], "10.0.0.101" )
-is( r.body.config.server[2].address[1], "10.0.0.102" )
+equals( #r.body.config, 0, "without option" )
+equals( r.body.config.logdir, "/var/log/foo/" )
+equals( r.body.config.debugfile, "/tmp/foo.debug" )
+equals( #r.body.config.server, 3 )
+equals( r.body.config.server[1].name, "sahara" )
+equals( r.body.config.server[1].osname, "solaris" )
+equals( #r.body.config.server[1].address, 2 )
+equals( r.body.config.server[1].address[1], "10.0.0.101" )
+equals( r.body.config.server[2].address[1], "10.0.0.102" )
 

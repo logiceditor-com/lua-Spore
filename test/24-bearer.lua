@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(11)
 
@@ -11,22 +11,22 @@ end
 local mw = require 'Spore.Middleware.Auth.Bearer'
 
 local req = require 'Spore.Request'.new({ spore = {} })
-type_ok( req, 'table', "Spore.Request.new" )
-type_ok( req.headers, 'table' )
-is( req.headers['authorization'], nil )
+is_table( req, "Spore.Request.new" )
+is_table( req.headers )
+equals( req.headers['authorization'], nil )
 
 local r = mw.call({}, req)
-is( req.headers['authorization'], nil, "authorization is not set" )
-is( r, nil )
+equals( req.headers['authorization'], nil, "authorization is not set" )
+equals( r, nil )
 
 local data = { bearer_token = 'ACCESS_TOKEN' }
 r = mw.call(data, req)
-is( req.headers['authorization'], nil, "authorization is not set" )
-is( r, nil )
+equals( req.headers['authorization'], nil, "authorization is not set" )
+equals( r, nil )
 
 req.env.spore.authentication = true
 r = mw.call(data, req)
 local auth = req.headers['authorization']
-type_ok( auth, 'string', "authorization is set" )
-is( auth, "Bearer ACCESS_TOKEN", "Bearer" )
-is( r, nil )
+is_string( auth, "authorization is set" )
+equals( auth, "Bearer ACCESS_TOKEN", "Bearer" )
+equals( r, nil )

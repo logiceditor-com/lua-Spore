@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(9)
 
@@ -21,18 +21,18 @@ client:enable('Parameter.Default', {
     dummy = 1,
 })
 
-is( Spore.early_validate, false, "early_validate" )
+equals( Spore.early_validate, false, "early_validate" )
 
 local r = client:get_info()
-is( r.request.env.spore.params.user, 'John' )
-is( r.request.env.spore.params.border, 0 )
-is( r.request.env.spore.params.dummy, nil )
+equals( r.request.env.spore.params.user, 'John' )
+equals( r.request.env.spore.params.border, 0 )
+equals( r.request.env.spore.params.dummy, nil )
 
 r = client:get_info{ user = 'Joe', border = 1 }
-is( r.request.env.spore.params.user, 'Joe' )
-is( r.request.env.spore.params.border, 1 )
+equals( r.request.env.spore.params.user, 'Joe' )
+equals( r.request.env.spore.params.border, 1 )
 
 r = client:get_user_info{ payload = 'opaque data' }
-is( r.request.env.spore.params.user, 'John' )
-is( r.request.env.spore.params.border, 0 )
+equals( r.request.env.spore.params.user, 'John' )
+equals( r.request.env.spore.params.border, 0 )
 

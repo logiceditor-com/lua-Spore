@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(8)
 
@@ -11,14 +11,14 @@ end
 local mw = require 'Spore.Middleware.UserAgent'
 
 local req = require 'Spore.Request'.new({})
-type_ok( req, 'table', "Spore.Request.new" )
-type_ok( req.headers, 'table' )
-is( req.headers['user-agent'], nil )
+is_table( req, "Spore.Request.new" )
+is_table( req.headers )
+equals( req.headers['user-agent'], nil )
 
 local r = mw.call( {}, req )
-is( req.headers['user-agent'], nil, "user-agent is not set" )
-is( r, nil )
+equals( req.headers['user-agent'], nil, "user-agent is not set" )
+equals( r, nil )
 
 r = mw.call( { useragent = "MyAgent" }, req )
-is( req.headers['user-agent'], "MyAgent", "user-agent is set" )
-is( r, nil )
+equals( req.headers['user-agent'], "MyAgent", "user-agent is set" )
+equals( r, nil )

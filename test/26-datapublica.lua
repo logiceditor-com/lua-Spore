@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 if not pcall(require, 'crypto') then
     skip_all 'no crypto'
@@ -30,26 +30,26 @@ local req = require 'Spore.Request'.new({
         params = {},
     }
 })
-type_ok( req, 'table', "Spore.Request.new" )
-type_ok( req.headers, 'table' )
+is_table( req, "Spore.Request.new" )
+is_table( req.headers )
 
 local r = mw.call({}, req)
-is( r, nil )
+equals( r, nil )
 
 local data = {
     key      = '356a192c7813b04c54574d18c28d46e6395428ab',
     password = '30d87add92e7b27ce4',
 }
 r = mw.call(data, req)
-is( r, nil )
+equals( r, nil )
 
 req.env.spore.authentication = true
 r = mw.call(data, req)
-is( r.status, 200 )
-like( r.request.url, "^http://services.org/path%?" )
-like( r.request.url, "[?&]offset=0&?" )
-like( r.request.url, "[?&]format=json&?" )
-like( r.request.url, "[?&]limit=50&?" )
-like( r.request.url, "[?&]key=356a192c7813b04c54574d18c28d46e6395428ab&?" )
-like( r.request.url, "[?&]signature=a358aa918f36156b215531e287f6d836415be582&?" )
+equals( r.status, 200 )
+matches( r.request.url, "^http://services.org/path%?" )
+matches( r.request.url, "[?&]offset=0&?" )
+matches( r.request.url, "[?&]format=json&?" )
+matches( r.request.url, "[?&]limit=50&?" )
+matches( r.request.url, "[?&]key=356a192c7813b04c54574d18c28d46e6395428ab&?" )
+matches( r.request.url, "[?&]signature=a358aa918f36156b215531e287f6d836415be582&?" )
 

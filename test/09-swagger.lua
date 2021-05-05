@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(14)
 
@@ -56,25 +56,25 @@ require 'Spore'.new_from_lua = function (t)
 end --mock
 
 local m = require 'Spore.Swagger'
-type_ok( m, 'table', "Spore.Swagger" )
-is( m, package.loaded['Spore.Swagger'] )
+is_table( m, "Spore.Swagger" )
+equals( m, package.loaded['Spore.Swagger'] )
 
-type_ok( m.new_from_swagger, 'function' )
-type_ok( m.convert, 'function' )
+is_function( m.new_from_swagger )
+is_function( m.convert )
 
 local spec = m.new_from_swagger('mock', {}, 'tagged')
-is( spec.name, 'api' )
-is( spec.version, 'v1' )
-is( spec.description, 'filtered' )
-is( spec.base_url, 'http://services.org:9999/restapi' )
+equals( spec.name, 'api' )
+equals( spec.version, 'v1' )
+equals( spec.description, 'filtered' )
+equals( spec.base_url, 'http://services.org:9999/restapi' )
 local meth = spec.methods.get_info
-type_ok( meth, 'table' )
-is( meth.path, '/show' )
-is( meth.method, 'GET' )
+is_table( meth )
+equals( meth.path, '/show' )
+equals( meth.method, 'GET' )
 
 spec = m.new_from_swagger('mock', {}, 'bad tag')
-type_ok( spec.methods.get_info, 'nil', "empty spec.methods" )
+is_nil( spec.methods.get_info, "empty spec.methods" )
 
 spec = m.new_from_swagger('mock')
-type_ok( spec.methods.get_info, 'table' )
-is( spec.description, 'api for unit test' )
+is_table( spec.methods.get_info )
+equals( spec.description, 'api for unit test' )

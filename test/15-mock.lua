@@ -3,7 +3,7 @@
 local Spore = require 'Spore'
 local url = require 'socket.url'
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(5)
 
@@ -38,10 +38,10 @@ local client = Spore.new_from_spec './test/api.json'
 client:enable('Mock', server)
 
 local r = client:get_info{ user = 'unknown' }
-is( r.status, 200 )
-is( r.body, 'user=unknown' )
+equals( r.status, 200 )
+equals( r.body, 'user=unknown' )
 
 r = client:get_info{ user = 'John.Doe' }
-is( r.status, 404 )
-is( r.body, 'Who are you?' )
+equals( r.status, 404 )
+equals( r.body, 'Who are you?' )
 

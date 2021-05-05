@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 if not pcall(require, 'crypto') then
     skip_all 'no crypto'
@@ -40,28 +40,28 @@ local req = require 'Spore.Request'.new({
         payload = 'PAYLOAD',
     }
 })
-type_ok( req, 'table', "Spore.Request.new" )
-type_ok( req.headers, 'table' )
+is_table( req, "Spore.Request.new" )
+is_table( req.headers )
 
 local r = mw.call({}, req)
-is( r, nil )
+equals( r, nil )
 
 local data = {
     aws_access_key  = 'xxx',
     aws_secret_key  = 'yyy',
 }
 r = mw.call(data, req)
-is( r, nil )
+equals( r, nil )
 
 req.env.spore.authentication = true
 r = mw.call(data, req)
-is( r, response )
-is( response.request.url, "http://mybucket.services.org:9999/restapi/show?dummy", "url" )
-like( response.request.headers['authorization'], "^AWS xxx:", "authorization" )
-like( response.request.headers['date'], "GMT$", "date" )
-is( response.request.headers['x-amz-p1'], 'foo', "x-amz-p1" )
-is( response.request.headers['x-amz-p2'], 'bar', "x-amz-p2" )
-is( response.request.headers['content-length'], 7, "content-length" )
-is( response.request.headers['content-type'], 'application/x-www-form-urlencoded', "content-type" )
-is( response.request.headers['content-md5'], 'ca8fef80e43c8db749b7c9406d535b1a', "content-md5" )
+equals( r, response )
+equals( response.request.url, "http://mybucket.services.org:9999/restapi/show?dummy", "url" )
+matches( response.request.headers['authorization'], "^AWS xxx:", "authorization" )
+matches( response.request.headers['date'], "GMT$", "date" )
+equals( response.request.headers['x-amz-p1'], 'foo', "x-amz-p1" )
+equals( response.request.headers['x-amz-p2'], 'bar', "x-amz-p2" )
+equals( response.request.headers['content-length'], 7, "content-length" )
+equals( response.request.headers['content-type'], 'application/x-www-form-urlencoded', "content-type" )
+equals( response.request.headers['content-md5'], 'ca8fef80e43c8db749b7c9406d535b1a', "content-md5" )
 

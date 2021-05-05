@@ -42,9 +42,8 @@ make install
 
 ## Test
 
-The test suite requires the modules lua-TestMore
-[lua-TestMore](https://fperrad.frama.io/lua-TestMore/)
-and [lua-TestLongString](https://fperrad.frama.io/lua-TestLongString).
+The test suite requires the module
+[lua-TestAssertion](https://fperrad.frama.io/TestAssertion/).
 
 ```sh
 make test

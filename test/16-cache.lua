@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(8)
 
@@ -23,24 +23,24 @@ end
 local client = Spore.new_from_spec './test/api.json'
 
 local r = client:get_info()
-is( r.body, '1' )
+equals( r.body, '1' )
 r = client:get_info()
-is( r.body, '2', "not cached" )
+equals( r.body, '2', "not cached" )
 
 client:enable 'Cache'
 r = client:get_info()
-is( r.body, '3' )
+equals( r.body, '3' )
 
 r = client:get_info{ user = 'john' }
-is( r.body, '4' )
+equals( r.body, '4' )
 
 r = client:get_info()
-is( r.body, '3', "cached" )
+equals( r.body, '3', "cached" )
 
 r = client:get_info{ user = 'john' }
-is( r.body, '4', "cached" )
+equals( r.body, '4', "cached" )
 
 require 'Spore.Middleware.Cache'.reset()
 
 r = client:get_info()
-is( r.body, '5', "reset" )
+equals( r.body, '5', "reset" )

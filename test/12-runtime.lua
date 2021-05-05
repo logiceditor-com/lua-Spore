@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(6)
 
@@ -11,10 +11,10 @@ end
 local mw = require 'Spore.Middleware.Runtime'
 
 local req = require 'Spore.Request'.new({})
-type_ok( req, 'table', "Spore.Request.new" )
+is_table( req, "Spore.Request.new" )
 
 local cb = mw.call( {}, req )
-type_ok( cb, 'function' )
+is_function( cb )
 
 local n = 1000000
 if package.loaded['luacov'] then
@@ -22,9 +22,9 @@ if package.loaded['luacov'] then
 end
 for _ = 1, n do --[[no op]] end
 local res = { headers = {} }
-is( res, cb(res) )
+equals( res, cb(res) )
 local header = res.headers['x-spore-runtime']
-type_ok( header, 'string' )
+is_string( header )
 diag(header)
 local val = tonumber(header)
-ok( val > 0 )
+truthy( val > 0 )

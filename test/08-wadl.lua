@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 if not pcall(require, 'lxp.lom') then
     skip_all 'no xml'
@@ -33,19 +33,19 @@ require 'Spore'.new_from_lua = function (t)
 end --mock
 
 local m = require 'Spore.WADL'
-type_ok( m, 'table', "Spore.WADL" )
-is( m, package.loaded['Spore.WADL'] )
+is_table( m, "Spore.WADL" )
+equals( m, package.loaded['Spore.WADL'] )
 
-type_ok( m.new_from_wadl, 'function' )
-type_ok( m.convert, 'function' )
+is_function( m.new_from_wadl )
+is_function( m.convert )
 
 local spec = m.new_from_wadl('mock')
 local meth = spec.methods.get_info
-type_ok( meth, 'table' )
-is( meth.base_url, 'http://services.org:9999/restapi/' )
-is( meth.path, 'show' )
-is( meth.method, 'GET' )
-is( #meth.required_params, 1 )
-is( meth.required_params[1], 'user' )
-is( #meth.optional_params, 1 )
-is( meth.optional_params[1], 'border' )
+is_table( meth )
+equals( meth.base_url, 'http://services.org:9999/restapi/' )
+equals( meth.path, 'show' )
+equals( meth.method, 'GET' )
+equals( #meth.required_params, 1 )
+equals( meth.required_params[1], 'user' )
+equals( #meth.optional_params, 1 )
+equals( meth.optional_params[1], 'border' )

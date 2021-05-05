@@ -117,8 +117,7 @@ rock:
 
 bed:
 	hererocks bed $(BED_OPTS) --no-readline --luarocks latest --verbose
-	bed/bin/luarocks install lua-testmore
-	bed/bin/luarocks install lua-testlongstring
+	bed/bin/luarocks install lua-testassertion
 	bed/bin/luarocks install luasocket
 	bed/bin/luarocks install luasec
 	bed/bin/luarocks install luaexpat

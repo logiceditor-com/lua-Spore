@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-require 'Test.More'
+require 'Test.Assertion'
 
 plan(14)
 
@@ -9,24 +9,24 @@ if not require_ok 'Spore' then
 end
 
 local m = require 'Spore'
-type_ok( m, 'table', "Spore" )
-is( m, package.loaded['Spore'] )
+is_table( m, "Spore" )
+equals( m, package.loaded['Spore'] )
 
-is( m._NAME, 'Spore', "_NAME" )
-like( m._COPYRIGHT, 'Perrad', "_COPYRIGHT" )
-like( m._DESCRIPTION, 'ReST client', "_DESCRIPTION" )
-type_ok( m._VERSION, 'string', "_VERSION" )
-like( m._VERSION, '^%d%.%d%.%d$' )
+equals( m._NAME, 'Spore', "_NAME" )
+matches( m._COPYRIGHT, 'Perrad', "_COPYRIGHT" )
+matches( m._DESCRIPTION, 'ReST client', "_DESCRIPTION" )
+is_string( m._VERSION, "_VERSION" )
+matches( m._VERSION, '^%d%.%d%.%d$' )
 
 m = require 'Spore.Core'
-type_ok( m, 'table', "Spore.Core" )
-is( m, package.loaded['Spore.Core'] )
+is_table( m, "Spore.Core" )
+equals( m, package.loaded['Spore.Core'] )
 
 m = require 'Spore.Protocols'
-type_ok( m, 'table', "Spore.Protocols" )
-is( m, package.loaded['Spore.Protocols'] )
+is_table( m, "Spore.Protocols" )
+equals( m, package.loaded['Spore.Protocols'] )
 
 m = require 'Spore.Request'
-type_ok( m, 'table', "Spore.Request" )
-is( m, package.loaded['Spore.Request'] )
+is_table( m, "Spore.Request" )
+equals( m, package.loaded['Spore.Request'] )
 

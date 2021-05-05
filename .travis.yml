@@ -31,8 +31,7 @@ before_install:
 install:
   - luarocks install luacov-coveralls
   - luarocks install luacheck
-  - luarocks install lua-testmore
-  - luarocks install lua-testlongstring
+  - luarocks install lua-testassertion
   - luarocks install luasocket
   - luarocks install luasec
   - luarocks install luaexpat
