@@ -11,14 +11,22 @@ local tostring = tostring
 local table = require 'table'
 local os = require 'os'
 local mime = require 'mime'
-local crypto = require 'crypto'
-local digest = crypto.digest or crypto.evp.digest
-local hmac = crypto.hmac
+local openssl_digest = require'openssl.digest'
+local openssl_hmac = require'openssl.hmac'
 local request = require 'Spore.Protocols'.request
 require 'Spore'.early_validate = false
 
 local _ENV = nil
 local m = {}
+
+local function digest (dtype, s)
+    local d = openssl_digest.new(dtype):final(s)
+    return d:gsub('.', function (c) return ('%02x'):format(c:byte()) end)
+end
+
+local function hmac (dtype, s, key)
+    return openssl_hmac.new(key, dtype):final(s)
+end
 
 function m:call (req)
     local env = req.env
@@ -94,7 +102,7 @@ function m:call (req)
 
         req.headers['authorization'] = 'AWS '
           .. self.aws_access_key .. ':'
-          .. mime.b64(hmac.digest('sha1', get_string_to_sign(), self.aws_secret_key, true))
+          .. mime.b64(hmac('sha1', get_string_to_sign(), self.aws_secret_key))
 
         return request(req)
     end

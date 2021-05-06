@@ -37,7 +37,7 @@ install:
   - luarocks install luaexpat
   - luarocks install luajson
   - luarocks install lualogging
-  - luarocks install luacrypto
+  - luarocks install luaossl
   - luarocks install lyaml 6.1.1
 
 script:

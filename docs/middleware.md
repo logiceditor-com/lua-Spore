@@ -23,7 +23,7 @@ return m
 This middleware implements the authentication for Amazon Web Services, see the
 [ref doc](http://docs.amazonwebservices.com/AmazonS3/latest/dev/index.html?RESTAuthentication.html).
 
-This middleware requires [luacrypto](http://mkottman.github.io/luacrypto/).
+This middleware requires [luaossl](http://25thandclement.com/~william/projects/luaossl.html).
 
 This middleware should be loaded as the last middleware,
 because it directly sends the request.
@@ -67,7 +67,7 @@ client:enable('Auth.Bearer', {
 This middleware implements the authentication for
 [DataPublica](http://www.data-publica.com/content/api/).
 
-This middleware requires [luacrypto](http://mkottman.github.io/luacrypto/).
+This middleware requires [luaossl](http://25thandclement.com/~william/projects/luaossl.html).
 
 This middleware should be loaded as the last middleware,
 because it directly sends the request.
@@ -88,7 +88,7 @@ This middleware adds a header `authorization` in the request
 The `nonce` retrieved in the response to the first request is stored
 and used by all following requests.
 
-This middleware requires [luacrypto](http://mkottman.github.io/luacrypto/).
+This middleware requires [luaossl](http://25thandclement.com/~william/projects/luaossl.html).
 
 ```lua
 client:enable('Auth.Digest', {
@@ -101,7 +101,7 @@ client:enable('Auth.Digest', {
 
 This middleware adds a header `authorization` in the request.
 
-This middleware requires [luacrypto](http://mkottman.github.io/luacrypto/).
+This middleware requires [luaossl](http://25thandclement.com/~william/projects/luaossl.html).
 
 This middleware should be loaded as the last middleware,
 because it directly sends the request.

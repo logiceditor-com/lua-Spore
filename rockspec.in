@@ -26,7 +26,7 @@ dependencies = {
 --    'luaexpat >= 1.1.0',        -- libexpat1-dev
 --    'lyaml >= 5',               -- libyaml-dev
 --    'lualogging >= 1.1.4',
---    'luacrypto >= 0.2.0',
+--    'luaossl',
 --    'lua-testmore >= 0.3.0',            -- test only
 --    'lua-testlongstring >= 0.2.0',      -- test only
 }

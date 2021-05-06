@@ -9,14 +9,18 @@
 local pairs = pairs
 local tconcat = require 'table'.concat
 local tsort = require 'table'.sort
-local crypto = require 'crypto'
-local digest = crypto.digest or crypto.evp.digest
+local openssl_digest = require 'openssl.digest'
 local url = require 'socket.url'
 local request = require 'Spore.Protocols'.request
 require 'Spore'.early_validate = false
 
 local _ENV = nil
 local m = {}
+
+local function digest (dtype, s)
+    local d = openssl_digest.new(dtype):final(s)
+    return d:gsub('.', function (c) return ('%02x'):format(c:byte()) end)
+end
 
 function m:call (req)
     local env = req.env

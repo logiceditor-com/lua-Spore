@@ -2,8 +2,8 @@
 
 require 'Test.Assertion'
 
-if not pcall(require, 'crypto') then
-    skip_all 'no crypto'
+if not pcall(require, 'openssl') then
+    skip_all 'no openssl'
 end
 
 plan(23)

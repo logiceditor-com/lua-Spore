@@ -5,8 +5,7 @@
 local error = error
 local time = require 'os'.time
 local format = require 'string'.format
-local crypto = require 'crypto'
-local digest = crypto.digest or crypto.evp.digest
+local openssl_digest = require 'openssl.digest'
 local url = require 'socket.url'
 local Protocols = require 'Spore.Protocols'
 
@@ -15,6 +14,11 @@ local _ENV = nil
 local m = {}
 
 --  see RFC-2617
+
+local function digest (dtype, s)
+    local d = openssl_digest.new(dtype):final(s)
+    return d:gsub('.', function (c) return ('%02x'):format(c:byte()) end)
+end
 
 function m.generate_nonce ()
     return format('%08x', time())

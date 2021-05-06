@@ -9,7 +9,7 @@ local random = require 'math'.random
 local time = require 'os'.time
 local tconcat = require 'table'.concat
 local tsort = require 'table'.sort
-local digest = require 'crypto'.hmac.digest
+local openssl_hmac = require 'openssl.hmac'
 local mime = require 'mime'
 local url = require 'socket.url'
 local escape = require 'Spore.Request'.escape
@@ -25,12 +25,17 @@ local m = {}
         RFC 5849 : The OAuth 1.0 Protocol
 --]]
 
+local function hmac (dtype, s, key, raw)
+    local d = openssl_hmac.new(key, dtype):final(s)
+    return raw and d or d:gsub('.', function (c) return ('%02x'):format(c:byte()) end)
+end
+
 function m.generate_timestamp ()
     return tostring(time())
 end
 
 function m.generate_nonce ()
-    return digest('sha1', tostring(random()) .. 'random' .. tostring(time()), 'keyyyy')
+    return hmac('sha1', tostring(random()) .. 'random' .. tostring(time()), 'keyyyy')
 end
 
 function m:call (req)
@@ -115,7 +120,7 @@ function m:call (req)
             oparams.oauth_nonce = m.generate_nonce()
             local oauth_signature_base_string = base_string()
             if oparams.oauth_signature_method == 'HMAC-SHA1' then
-                local hmac_binary = digest('sha1', oauth_signature_base_string, signature_key, true)
+                local hmac_binary = hmac('sha1', oauth_signature_base_string, signature_key, true)
                 local hmac_b64 = mime.b64(hmac_binary)
                 oauth_signature = escape(hmac_b64)
             else

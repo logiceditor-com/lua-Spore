@@ -123,6 +123,7 @@ bed:
 	bed/bin/luarocks install luaexpat
 	bed/bin/luarocks install luajson
 	bed/bin/luarocks install lualogging
+	bed/bin/luarocks install luaossl
 	bed/bin/luarocks install lyaml 6.1.1
 	bed/bin/luarocks install luacov
 	hererocks bed --show
