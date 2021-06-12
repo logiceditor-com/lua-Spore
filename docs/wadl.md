@@ -6,7 +6,7 @@
 # Reference
 
 This module allows to use a
-[Web Application Description Language](http://www.w3.org/Submission/wadl/)
+[Web Application Description Language](https://www.w3.org/Submission/wadl/)
 document as a SPORE specification.
 
 __LIMITATION__ : cross-references are not supported.
@@ -17,7 +17,7 @@ This module requires [LuaExpat](http://www.keplerproject.org/luaexpat/).
 
 #### new_from_wadl( desc, [, { options }] )
 
-Instanciate a ReST client from a [WADL](http://www.w3.org/Submission/wadl/)
+Instanciate a ReST client from a [WADL](https://www.w3.org/Submission/wadl/)
 document defined by an URL or a filename.
 
 The optional table `options` allows to overwrite some parameters
@@ -30,7 +30,7 @@ local client = wadl.new_from_wadl 'yahoo_news_search.wadl'
 
 #### convert( wadl )
 
-Converts a [WADL](http://www.w3.org/Submission/wadl/)
+Converts a [WADL](https://www.w3.org/Submission/wadl/)
 document into a SPORE specification (represented by a `table`).
 
 ## Utilities

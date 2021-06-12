@@ -20,7 +20,7 @@ local _ENV = nil
 local m = {}
 
 --[[
-        Homepage: http://oauth.net/
+        Homepage: https://oauth.net/
 
         RFC 5849 : The OAuth 1.0 Protocol
 --]]

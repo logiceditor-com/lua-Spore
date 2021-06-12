@@ -181,7 +181,7 @@ and the header content-type when `payload`
 , with the value `text/x-yaml`.
 
 This middleware requires
-[LYAML](http://github.com/gvvaughan/lyaml/).
+[LYAML](https://github.com/gvvaughan/lyaml/).
 
 ```lua
 client:enable 'Format.YAML'

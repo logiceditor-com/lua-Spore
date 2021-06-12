@@ -184,7 +184,7 @@ print(res.body.user.name)       --> Scott Chacon
 ## GitHub via https
 
 The HTTPS protocol requires
-[LuaSec](http://github.com/brunoos/luasec).
+[LuaSec](https://github.com/brunoos/luasec).
 
 ```lua
 local Spore = require 'Spore'

@@ -9,10 +9,10 @@ description = {
     summary = "a generic ReST client",
     detailed = [[
         lua-Spore is an implementation of SPORE (Specification to a POrtable Rest Environment),
-        see http://github.com/SPORE/specifications.
+        see https://github.com/SPORE/specifications.
 
         Some specifications of service are available at
-        http://github.com/SPORE/api-description.
+        https://github.com/SPORE/api-description.
     ]],
     homepage = 'https://fperrad.frama.io/lua-Spore/',
     maintainer = 'Francois Perrad',

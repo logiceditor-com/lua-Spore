@@ -1,7 +1,7 @@
 --
 -- lua-Spore : <https://fperrad.frama.io/lua-Spore/>
 --
--- see http://search.cpan.org/~grantm/XML-Simple/
+-- see https://metacpan.org/pod/XML::Simple
 --
 -- a XML document without mixed content could be represented by a simplified data structure
 --

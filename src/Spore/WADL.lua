@@ -3,7 +3,7 @@
 -- lua-Spore : <https://fperrad.frama.io/lua-Spore>
 --
 -- Web Application Description Language
--- see http://www.w3.org/Submission/wadl/
+-- see https://www.w3.org/Submission/wadl/
 
 -- LIMITATION: cross-references are not supported
 
