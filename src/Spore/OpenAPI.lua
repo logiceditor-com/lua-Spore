@@ -71,8 +71,10 @@ local function convert (doc, tag)
                         local required_payload, optional_payload
                         local required_params, optional_params
                         local headers, form_data
+                        local raw_params = { }
 
                         local function aggregate_param (param)
+                            raw_params[#raw_params + 1] = param
                             if param['in'] == 'body' then
                                 if param.required then
                                     required_payload = true
@@ -117,27 +119,40 @@ local function convert (doc, tag)
                             end
                         end
 
+                        if meth.requestBody then
+                            required_payload = true
+                        end
+
                         local expected_status
                         if not meth.responses.default then
                             expected_status = {}
                            for status in pairs(meth.responses) do
-                                expected_status[#expected_status+1] = tonumber(status)
+                                expected_status[#expected_status+1] =
+                                    tonumber(status)
                             end
                         end
 
-                        spore.methods[meth.operationId] = {
+                        local method_path = (path .. '/' .. op)
+                          :gsub('{([^}]+)}', ':%1')
+                          :gsub('-', '_')
+
+                        spore.methods[method_path] = {
                             method = upper(op),
-                            path = (m.spore == '1.0') and convert_uri_template(path) or path,
+                            path = path,
                             headers = headers,
                             ['form-data'] = form_data,
                             required_params = required_params,
                             optional_params = optional_params,
+                            raw_params = raw_params,
                             required_payload = required_payload,
                             optional_payload = optional_payload,
                             expected_status = expected_status,
                             deprecated = meth.deprecated,
                             authentication = meth.security and true or nil,
-                            description = meth.summary or meth.description,
+                            summary = meth.summary,
+                            description = meth.description,
+                            responses = meth.responses,
+                            request_body = meth.requestBody,
                         }
                     end
                 end
