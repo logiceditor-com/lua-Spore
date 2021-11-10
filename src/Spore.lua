@@ -1,7 +1,9 @@
-
---
--- lua-Spore : <https://fperrad.frama.io/lua-Spore>
---
+--------------------------------------------------------------------------------
+-- Spore.lua: main library module
+-- This file is a part of lua-Spore LE fork library
+-- Copyright (c) lua-Spore LE fork authors
+-- (see file `COPYRIGHT` for the license)
+--------------------------------------------------------------------------------
 
 local assert = assert
 local error = error
@@ -267,9 +269,6 @@ m.new_from_spec = new_from_spec
 m._NAME = ...
 m._VERSION = version
 m._DESCRIPTION = "lua-Spore : a generic ReST client"
-m._COPYRIGHT = "Copyright (c) 2010-2018 Francois Perrad"
+m._COPYRIGHT =
+    "Copyright (c) 2010-2018 Francois Perrad\nCopyright (c) 2021 LogicEditor"
 return m
---
--- This library is licensed under the terms of the MIT/X11 license,
--- like Lua itself.
---

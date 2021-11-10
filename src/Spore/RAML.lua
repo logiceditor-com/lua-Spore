@@ -1,3 +1,10 @@
+--------------------------------------------------------------------------------
+-- Spore/RAML.lua: RAML specifications loader
+-- This file is a part of lua-Spore LE fork library
+-- Copyright (c) lua-Spore LE fork authors
+-- (see file `COPYRIGHT` for the license)
+--------------------------------------------------------------------------------
+
 local pairs = pairs
 local checktype = require 'Spore'.checktype
 local new_from_lua = require 'Spore'.new_from_lua

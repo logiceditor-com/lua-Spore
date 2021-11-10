@@ -1,7 +1,9 @@
-
---
--- lua-Spore : <https://fperrad.frama.io/lua-Spore>
---
+--------------------------------------------------------------------------------
+-- Spore/OpenAPI.lua: OpenAPI v3 specifications loader
+-- This file is a part of lua-Spore LE fork library
+-- Copyright (c) lua-Spore LE fork authors
+-- (see file `COPYRIGHT` for the license)
+--------------------------------------------------------------------------------
 
 local pairs = pairs
 local tonumber = tonumber
@@ -170,9 +172,3 @@ function m.new_from_open_api (api, opts, tag)
 end
 
 return m
---
--- Copyright (c) 2016-2018 Francois Perrad
---
--- This library is licensed under the terms of the MIT/X11 license,
--- like Lua itself.
---
