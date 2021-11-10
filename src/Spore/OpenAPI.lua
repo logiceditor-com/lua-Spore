@@ -124,7 +124,7 @@ local function convert (doc, tag)
                             end
                         end
 
-                        spore.methods[path .. ':' .. op] = {
+                        spore.methods[path .. '/' .. op] = {
                             method = upper(op),
                             path = path,
                             headers = headers,
