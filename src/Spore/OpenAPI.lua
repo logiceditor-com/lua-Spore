@@ -65,8 +65,10 @@ local function convert (doc, tag)
                         local required_payload, optional_payload
                         local required_params, optional_params
                         local headers, form_data
+                        local raw_params = { }
 
                         local function aggregate_param (param)
+                            raw_params[#raw_params + 1] = param
                             if param['in'] == 'body' then
                                 if param.required then
                                     required_payload = true
@@ -135,6 +137,7 @@ local function convert (doc, tag)
                             ['form-data'] = form_data,
                             required_params = required_params,
                             optional_params = optional_params,
+                            raw_params = raw_params,
                             required_payload = required_payload,
                             optional_payload = optional_payload,
                             expected_status = expected_status,
